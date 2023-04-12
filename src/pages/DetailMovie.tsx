@@ -2,38 +2,13 @@ import React from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import data from "../data/movies.json"
+import { MovieType } from "../types/moviesType"
 
 interface DetailMovieProps {}
 
 export const DetailMovie: React.FC<DetailMovieProps> = ({}) => {
-  interface CurrentMovieInterface {
-    [key: string]: string | string[] | undefined
-    Title: string
-    Year: string
-    Rated?: string
-    Released: string
-    Runtime: string
-    Genre: string
-    Director?: string
-    Writer: string
-    Actors: string
-    Plot: string
-    Language: string
-    Country: string
-    Awards: string
-    Video: string
-    Poster: string
-    Metascore?: string
-    imdbRating: string
-    imdbVotes: string
-    imdbID: string
-    Type: string
-    totalSeasons?: string
-    Response: string
-    Images: string[]
-  }
   let param = useParams()
-  let currentMovie: CurrentMovieInterface[] = data.filter(
+  let currentMovie: MovieType[] = data.filter(
     (movie) => movie.Title === param.movie
   )
   let details = []
@@ -65,7 +40,11 @@ export const DetailMovie: React.FC<DetailMovieProps> = ({}) => {
       </Link>
       <div className="carousel w-screen max-h-[70vh]">
         {currentMovie[0].Images.map((img, i) => (
-          <div id={`slide${i + 1}`} className="carousel-item relative w-full">
+          <div
+            key={i + 5}
+            id={`slide${i + 1}`}
+            className="carousel-item relative w-full"
+          >
             <img src={img} className="w-full object-cover bg-center " />
             <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
               <a href={`#slide${i}`} className="btn btn-circle">

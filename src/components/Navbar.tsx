@@ -1,15 +1,30 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import logo from "../assets/streamflix.png"
 import { NavLink } from "react-router-dom"
+import { MovieContext } from "../App"
+import { ContextValueInterface } from "../App"
 
 interface NavbarProps {}
 
 export const Navbar: React.FC<NavbarProps> = ({}) => {
-  const [isChecked, setIsChecked] = useState(false)
+  const { movies, handleUpdate } =
+    useContext<ContextValueInterface>(MovieContext)
+  const [isChecked, setIsChecked] = useState<boolean>(false)
   isChecked
     ? (document.documentElement.dataset.theme = "emerald")
     : (document.documentElement.dataset.theme = "dark")
 
+  const handleSeries = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    handleUpdate("series")
+  }
+  const handleMovies = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    handleUpdate("movie")
+  }
+  const handleAllMovies = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    handleUpdate("all")
+  }
   return (
     <div className="navbar bg-base-100 drop-shadow-xl relative z-20">
       <div className="navbar-start">
@@ -38,13 +53,13 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <NavLink to="/all">All</NavLink>
+              <button onClick={handleAllMovies}>All</button>
             </li>
             <li>
-              <NavLink to="/movies">Movies</NavLink>
+              <button>Movies</button>
             </li>
             <li>
-              <NavLink to="/series">Series</NavLink>
+              <button onClick={handleSeries}>Series</button>
             </li>
           </ul>
         </div>
@@ -62,13 +77,13 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
             <NavLink to="/">Home</NavLink>
           </li>
           <li>
-            <NavLink to="/all">All</NavLink>
+            <button onClick={handleAllMovies}>All</button>
           </li>
           <li>
-            <NavLink to="/movies">Movies</NavLink>
+            <button onClick={handleMovies}>Movies</button>
           </li>
           <li>
-            <NavLink to="/series">Series</NavLink>
+            <button onClick={handleSeries}>Series</button>
           </li>
         </ul>
       </div>
